@@ -1,0 +1,42 @@
+P1 - max of 3 numbers
+int a = Console.Read().ToInt32(); 
+int b = Console.Read().ToInt32();
+int c = Console.Read().ToInt32();
+
+int max;
+if (a>=b && a=>c) max = a;
+else if (b>=a && b=>c) max = b;
+else max = c;
+
+Console.WriteLine($”The max is {max}”);
+P2 - compute GCD of 2 numbers
+int a = Console.Read().ToInt32();
+int b = Console.Read().ToInt32();
+
+while (a != b) {
+if(a>b) a = a – b;
+	else b = b – a;
+}
+
+Console.WriteLine($“The GCD is {a}”);
+P3 - compute the sum of n numbers
+int n = Console.Read().ToInt32();
+int sum = 0;
+
+for(int i=0;i<n;i++){
+	int number = Console.Read().ToInt32();
+	sum += number;
+}
+
+Console.WriteLine($"Sum = {sum}");
+P1ERR - computer the max of n numbers
+int the number = Console.Read().ToInt32();
+int sum = 0;
+
+for(int i=0;i<n;i++)
+	int number = Console.Read().ToInt32();
+	sum += number;
+}
+
+Console.WriteLine($"Sum = {sum}");
+

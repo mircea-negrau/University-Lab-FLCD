@@ -1,0 +1,23 @@
+Syntax:
+<statement> ::= <declarationStatement> | <assignStatement> | <ioStatement> | <ifStatement> | <whileStatement> | <forStatement> | ";" 
+<baseType> ::= "bool" | "char" | "int" | "double" | "string"
+<declarationStatement> ::= <type> <identifier>
+<arrayDeclaration> ::= <baseType> "[" <unsigned number> "]"
+<declarationList> ::= <declarationStatement> | <declarationStatement> ";" <declarationList>
+<type>  ::= <baseType> | <arrayDeclaration>
+<relation> ::= "<" | "<=" | "==" | ">=" | ">" | "!="
+<whileStatement> ::= "while" "(" <condition> ")" "{" <statement> "}"
+<forStatement> ::= for (<statementList>, <condition>, <statementList>) { <statement-list> }
+<ioStatement> ::= "Console.Read("<identifier>")" | "Console.WriteLine("<expression>")"
+<ifStatement> ::= "if" "(" <condition> ")" <stamtement> ["ELSE IF" "(" <condition>" ")" <statement>] ["ELSE" <statement>]
+<assignStatement> ::= <identifier> "=" <expression>
+<statementList> ::= <statement> | <statementList> <statement>
+<ternary> ::= <condition> ? <expression> : <expression>
+<condition> ::= <expression> | <conditionalExpression>  
+<conditionalExpression> ::= <expression> <relation> <expression>
+<termOperator> = * | /
+<term> ::= <term> <termOperator> <factor> | <factor>
+<factor> ::= <identifier> | <constant> | <expression>
+<expression> ::= <expression> "+" term | term
+<expressionOperator> = + | -
+<expression> ::= <expression> <expressionOperator> <term> | <term> | <ternary>

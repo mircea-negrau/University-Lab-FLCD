@@ -13,8 +13,10 @@ Syntax:
 <assignStatement> ::= <identifier> "=" <expression>
 <statementList> ::= <statement> | <statementList> <statement>
 <ternary> ::= <condition> ? <expression> : <expression>
+<condition> ::= <expression> | <conditionalExpression>  
+<conditionalExpression> ::= <expression> <relation> <expression>
 <termOperator> = * | /
-<term> ::= <term> <term operator> <factor> | <factor>
+<term> ::= <term> <termOperator> <factor> | <factor>
 <factor> ::= <identifier> | <constant> | <expression>
 <expression> ::= <expression> "+" term | term
 <expressionOperator> = + | -

@@ -1,103 +1,172 @@
 #include <string>
+#include <iostream>
 
 template<typename K, typename V>
 class Node {
 public:
-    K Key;
-    V Value;
-    Node<K, V> *Parent;
-    Node<K, V> *Left;
-    Node<K, V> *Right;
+    K key;
+    V value;
+    Node<K, V> *parent;
+    Node<K, V> *left;
+    Node<K, V> *right;
 
     Node(K key, V value) {
-        this->Key = key;
-        this->Value = value;
+        this->key = key;
+        this->value = value;
+        this->parent = nullptr;
+        this->left = nullptr;
+        this->right = nullptr;
+    }
+
+    Node<K, V> *GetMinimumKey() {
+        auto *current = this;
+        while (current->left != nullptr) {
+            current = current->left;
+        }
+        return current;
+    }
+
+    bool HasBothChildren() {
+        return this->left && this->right;
+    }
+
+    friend std::ostream &operator<<(std::ostream &out, const Node<K, V> &node) {
+        if (node.left != nullptr) out << *node.left;
+        out << node.key << ": " << node.value << "\n";
+        if (node.right != nullptr) out << *node.right;
+        return out;
     }
 };
 
 template<typename K, typename V>
 class SymbolTable {
 public:
-    Node<K, V> *Head;
+    Node<K, V> *head;
+
+    SymbolTable() = default;
 
     void Add(K key, V value) {
-        if (this->IsEmptyHead()) {
-            this->SetHead(key, value);
-        } else {
-            this->SetElement(key, value);
-        }
+        if (this->IsEmpty())
+            return this->AddHead(key, value);
+        this->AddElement(key, value);
     }
 
-    Node<K, V> Find(K key) {
-        Node<K, V> currentNode = this->Head;
+    Node<K, V> *Find(K key) {
+        Node<K, V> *currentNode = this->head;
+
         while (currentNode != nullptr) {
-            if (currentNode.Key == key) return currentNode;
-            if (currentNode.Key >= key) {
-                currentNode = currentNode.Left;
-            } else {
-                currentNode = currentNode.Right;
-            }
+            if (currentNode->key == key) return currentNode;
+            if (currentNode->key >= key) currentNode = currentNode->left;
+            else currentNode = currentNode->right;
         }
-        throw std::exception();
+
+        return nullptr;
     }
 
-    bool Delete(K key) {
-        Node<K, V> *node;
-        try {
-            node = this->Find(key);
-        } catch (std::exception &exception) {
-            return false;
-        }
+    bool Delete(K key, Node<K, V> *node = nullptr) {
+        Node<K, V> *currentNode;
+        currentNode = node == nullptr ? Find(key) : node;
+        if (currentNode == nullptr) return false;
 
-        if (node->Left == nullptr && node->Right == nullptr) {
-            if (node->Parent->Left == node) node->Parent->Left = nullptr;
-            else node->Parent->Right = nullptr;
-        } else if (node->Left != nullptr && node->Right == nullptr) {
-            node->Left->Parent = node->Parent;
-            if (node->Parent->Left == node) node->Parent->Left = node->Left;
-            else node->Parent->Right = node->Left;
-        } else if (node->Left == nullptr && node->Right != nullptr) {
-            node->Right->Parent = node->Parent;
-            if (node->Parent->Left == node) node->Parent->Left = node->Right;
-            else node->Parent->Right = node->Right;
-        } else {
-            // ToDo: case for node with both children
-        }
+        if (currentNode->HasBothChildren()) DeleteNodeWithBothChildren(currentNode);
+        else if (currentNode->left) DeleteNodeWithLeftChild(currentNode);
+        else if (currentNode->right) DeleteNodeWithRightChild(currentNode);
+        else DeleteLeafNode(currentNode);
 
-        free(node);
+        return true;
+    }
+
+    friend std::ostream &operator<<(std::ostream &out, const SymbolTable<K, V> &symbolTable) {
+        if (symbolTable.head != nullptr) out << *symbolTable.head << " ";
+        return out;
     }
 
 private:
-    bool IsEmptyHead() {
-        return this->Head == nullptr;
+    bool IsEmpty() {
+        return this->head == nullptr;
     }
 
-    void SetHead(K key, V value) {
-        this->Head = new Node<K, V>(key, value);
+    bool IsHead(Node<K, V> *element) {
+        return this->head == element;
     }
 
-    void SetElement(K key, V value) {
+    void AddHead(K key, V value) {
+        this->head = new Node<K, V>(key, value);
+    }
+
+    void AddElement(K key, V value) {
         Node<K, V> *currentElement = this->head;
         while (true) {
-            if (currentElement->Key >= key) {
-                if (currentElement->Left == nullptr) {
+            if (currentElement->key >= key) {
+                if (currentElement->left == nullptr) {
                     auto *newNode = new Node<K, V>(key, value);
-                    newNode->Parent = currentElement;
-                    currentElement->Left = newNode;
+                    newNode->parent = currentElement;
+                    currentElement->left = newNode;
                     break;
                 } else {
-                    currentElement = currentElement->Left;
+                    currentElement = currentElement->left;
                 }
             } else {
-                if (currentElement->Right == nullptr) {
+                if (currentElement->right == nullptr) {
                     auto *newNode = new Node<K, V>(key, value);
-                    newNode->Parent = currentElement;
-                    currentElement->Right = newNode;
+                    newNode->parent = currentElement;
+                    currentElement->right = newNode;
                     break;
                 } else {
-                    currentElement = currentElement->Right;
+                    currentElement = currentElement->right;
                 }
             }
         }
     }
+
+    void DeleteNodeWithBothChildren(Node<K, V> *currentNode) {
+        Node<K, V> *successor = currentNode->right->GetMinimumKey();
+        currentNode->key = successor->key;
+        currentNode->value = successor->value;
+        Delete(successor->key, successor);
+    }
+
+    void DeleteNodeWithRightChild(Node<K, V> *currentNode) {
+        currentNode->right->parent = currentNode->parent;
+        if (currentNode->parent) {
+            if (currentNode == currentNode->parent->left) currentNode->parent->left = currentNode->right;
+            else currentNode->parent->right = currentNode->right;
+        }
+        if (IsHead(currentNode)) {
+            this->head = currentNode->right;
+            currentNode->right->parent = nullptr;
+        }
+        delete currentNode;
+    }
+
+    void DeleteNodeWithLeftChild(Node<K, V> *currentNode) {
+        currentNode->left->parent = currentNode->parent;
+        if (currentNode->parent) {
+            if (currentNode == currentNode->parent->left) currentNode->parent->left = currentNode->left;
+            else currentNode->parent->right = currentNode->left;
+        }
+        if (IsHead(currentNode)) {
+            this->head = currentNode->left;
+            currentNode->left->parent = nullptr;
+        }
+        delete currentNode;
+    }
+
+    void DeleteLeafNode(Node<K, V> *currentNode) {
+        if (currentNode->parent) {
+            if (currentNode == currentNode->parent->left) currentNode->parent->left = nullptr;
+            else currentNode->parent->right = nullptr;
+        }
+        if (IsHead(currentNode)) this->head = nullptr;
+        delete currentNode;
+    }
 };
+
+int main() {
+    SymbolTable<std::string, int> symbolTable = *new SymbolTable<std::string, int>();
+    symbolTable.Add("test", 5);
+    symbolTable.Add("aaa", 3);
+    symbolTable.Add("abaa", 4);
+    symbolTable.Add("zabaa", 6);
+    std::cout << symbolTable;
+}

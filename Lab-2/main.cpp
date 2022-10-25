@@ -94,28 +94,26 @@ private:
         this->head = new Node<K, V>(key, value);
     }
 
-    void AddElement(K key, V value) {
+    Node<K, V> *FindElementParent(K key) {
+        Node<K, V> *previousElement = nullptr;
         Node<K, V> *currentElement = this->head;
-        while (true) {
-            if (currentElement->key >= key) {
-                if (currentElement->left == nullptr) {
-                    auto *newNode = new Node<K, V>(key, value);
-                    newNode->parent = currentElement;
-                    currentElement->left = newNode;
-                    break;
-                } else {
-                    currentElement = currentElement->left;
-                }
-            } else {
-                if (currentElement->right == nullptr) {
-                    auto *newNode = new Node<K, V>(key, value);
-                    newNode->parent = currentElement;
-                    currentElement->right = newNode;
-                    break;
-                } else {
-                    currentElement = currentElement->right;
-                }
-            }
+        while (currentElement != nullptr) {
+            previousElement = currentElement;
+            if (currentElement->key >= key) currentElement = currentElement->left;
+            else currentElement = currentElement->right;
+        }
+        return previousElement;
+    }
+
+    void AddElement(K key, V value) {
+        Node<K, V> *parent = FindElementParent(key);
+        auto *newNode = new Node<K, V>(key, value);
+        if (parent->key >= key) {
+            parent->left = newNode;
+            newNode->parent = parent;
+        } else {
+            parent->right = newNode;
+            newNode->parent = parent;
         }
     }
 

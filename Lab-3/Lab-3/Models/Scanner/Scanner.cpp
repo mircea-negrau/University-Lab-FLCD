@@ -62,13 +62,13 @@ private:
 
 	vector<string> getMultipleSymbolOperators(vector<string> tokens) {
 		auto textHelper = TextHelper();
-		vector<string> equalPossibleOperators = vector<string>{ "!", ">", "<", "=" };
+		vector<string> equalPossibleOperators = vector<string>{ "=", "!", "<", ">" };
 
 		if (tokens.size() < 2) {
 			return tokens;
 		}
 
-		vector<string> reconstructed = vector<string>();
+		vector<string> rebuilt = vector<string>();
 
 		int current = 1;
 
@@ -79,20 +79,20 @@ private:
 			string currentChar = tokens[current];
 
 			if (currentChar == "=" && textHelper.contains(equalPossibleOperators, previousChar)) {
-				reconstructed.push_back(previousChar + currentChar);
+				rebuilt.push_back(previousChar + currentChar);
 				current += 1;
 			}
 			else {
-				reconstructed.push_back(previousChar);
+				rebuilt.push_back(previousChar);
 			}
 
 			current += 1;
 			if (current == tokens.size()) {
-				reconstructed.push_back(tokens[current - 1]);
+				rebuilt.push_back(tokens[current - 1]);
 			}
 		}
 
-		return reconstructed;
+		return rebuilt;
 	}
 
 	vector<string> separateLines(vector<string> fileContent) {

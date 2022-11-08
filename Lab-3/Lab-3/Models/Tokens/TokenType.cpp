@@ -1,10 +1,10 @@
 #pragma once
 
 enum TokenType {
-	Operator,
-	Separator,
-	Keyword,
-	Identifier,
 	Constant,
+	Identifier,
+	Keyword,
+	Separator,
+	Operator,
 	Unknown
 };

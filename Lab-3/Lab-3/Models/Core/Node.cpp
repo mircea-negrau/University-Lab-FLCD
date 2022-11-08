@@ -57,7 +57,8 @@ public:
 	string toString() {
 		string text = "";
 		if (this->left != nullptr) text += this->left->toString();
-		text += std::to_string(std::stoi(this->key) - 10000) + ": " + (string)this->value + "\n";
+		//text += std::to_string(std::stoi(this->key) - 10000) + ": " + (string)this->value + "\n";
+		text += this->key + ": " + (string)this->value + "\n";
 		if (this->right != nullptr) text += this->right->toString();
 		return text;
 	}

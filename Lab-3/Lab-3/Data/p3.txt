@@ -1,0 +1,9 @@
+int n=Console.Read().ToInt32();
+int sum=0;
+
+for(int i=0;i<n;i=i+1){
+	int number=Console.Read().ToInt32();
+	sum=sum+number;
+}
+
+Console.WriteLine("Sum", sum);

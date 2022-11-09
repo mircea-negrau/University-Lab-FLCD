@@ -16,33 +16,43 @@ using std::regex;
 class TokensIdentifier {
 public:
 	static TokenType identify(string token, Tokens tokens) {
-		auto textHelper = TextHelper();
-		if (textHelper.contains(tokens.keywords, token))
+		if (isKeyword(token, tokens))
 			return Keyword;
-		else if (textHelper.contains(tokens.operators, token)) {
+		else if (isOperator(token, tokens))
 			return Operator;
-		}
-		else if (textHelper.contains(tokens.separators, token)) {
+		else if (isSeparator(token, tokens))
 			return Separator;
-		}
-		else if (matchesIdentifier(token)) {
+		else if (isIdentifier(token))
 			return Identifier;
-		}
-		else if (matchesConstant(token)) {
+		else if (isConstant(token))
 			return Constant;
-		}
 		return Unknown;
 	}
 
 private:
-	static bool matchesIdentifier(string token) {
+	static bool isSeparator(string token, Tokens tokens) {
+		auto textHelper = TextHelper();
+		textHelper.contains(tokens.separators, token);
+	}
+
+	static bool isKeyword(string token, Tokens tokens) {
+		auto textHelper = TextHelper();
+		textHelper.contains(tokens.keywords, token);
+	}
+
+	static bool isOperator(string token, Tokens tokens) {
+		auto textHelper = TextHelper();
+		textHelper.contains(tokens.operators, token);
+	}
+
+	static bool isIdentifier(string token) {
 		return regex_match(token, regex("^[a-zA-Z]+[a-z|A-z|0-9]*$"));
 	}
 
-	static bool matchesConstant(string token) {
-		return regex_match(token, regex("True|False")) 
+	static bool isConstant(string token) {
+		return regex_match(token, regex("True|False"))
 			|| regex_match(token, regex("^0$"))
-			|| regex_match(token, regex("^[1-9]+[0-9]*$")) 
-			|| regex_match(token, regex("^\"[a-z|A-Z|0-9|_]+\"$")); 
+			|| regex_match(token, regex("^[1-9]+[0-9]*$"))
+			|| regex_match(token, regex("^\"[a-z|A-Z|0-9|_]+\"$"));
 	}
 };

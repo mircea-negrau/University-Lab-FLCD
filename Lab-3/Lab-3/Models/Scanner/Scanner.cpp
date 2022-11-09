@@ -95,7 +95,7 @@ private:
 		return rebuilt;
 	}
 
-	vector<string> separateLines(vector<string> fileContent) {
+	vector<string> separateTokensInLines(vector<string> fileContent) {
 		auto textHelper = TextHelper();
 		auto response = vector<string>();
 		for (auto& element : fileContent) {
@@ -131,16 +131,16 @@ public:
 
 
 	Result* scan(string programSourceCodePath) {
-		vector<string> lines = separateLines(getContentFromPath(programSourceCodePath));
+		vector<string> lines = separateTokensInLines(getContentFromPath(programSourceCodePath));
 		int lineCounter = 0;
-		TokensIdentifier classifier = TokensIdentifier();
+		TokensIdentifier tokensIdentifier = TokensIdentifier();
 
 		auto scannerConstants = ScannerConstants();
 		for (auto& line : lines) {
 			lineCounter++;
 			vector<string> lineTokens = getTokensFromLine(line);
 			for (auto& token : lineTokens) {
-				TokenType type = classifier.identify(token, *tokens);
+				TokenType type = tokensIdentifier.identify(token, *tokens);
 				switch (type) {
 				case TokenType::Identifier: {
 					(*identifiers).Add(token);

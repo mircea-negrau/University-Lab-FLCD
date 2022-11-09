@@ -11,7 +11,7 @@ using std::fstream;
 using std::cout;
 
 int main() {
-	const string PROGRAM_PATH = "C:\\Users\\PC\\Documents\\GitHub\\University-Lab-FLCD\\Lab-3\\Lab-3\\Data\\err.txt";
+	const string PROGRAM_PATH = "C:\\Users\\PC\\Documents\\GitHub\\University-Lab-FLCD\\Lab-3\\Lab-3\\Data\\p3.txt";
 	const string TOKENS_PATH = "C:\\Users\\PC\\Documents\\GitHub\\University-Lab-FLCD\\Lab-3\\Lab-3\\Data\\token.in";
 	const string OUTPUT_FILE = "C:\\Users\\PC\\Documents\\GitHub\\University-Lab-FLCD\\Lab-3\\Lab-3\\Data\\PIF_ST.out";
 

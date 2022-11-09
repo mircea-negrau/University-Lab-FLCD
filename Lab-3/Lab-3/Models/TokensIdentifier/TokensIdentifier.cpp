@@ -32,17 +32,17 @@ public:
 private:
 	static bool isSeparator(string token, Tokens tokens) {
 		auto textHelper = TextHelper();
-		return textHelper.contains(tokens.separators, token);
+		textHelper.contains(tokens.separators, token);
 	}
 
 	static bool isKeyword(string token, Tokens tokens) {
 		auto textHelper = TextHelper();
-		return textHelper.contains(tokens.keywords, token);
+		textHelper.contains(tokens.keywords, token);
 	}
 
 	static bool isOperator(string token, Tokens tokens) {
 		auto textHelper = TextHelper();
-		return textHelper.contains(tokens.operators, token);
+		textHelper.contains(tokens.operators, token);
 	}
 
 	static bool isIdentifier(string token) {

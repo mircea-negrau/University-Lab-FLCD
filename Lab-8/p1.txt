@@ -1,0 +1,8 @@
+int a = Console.Read().ToInt32();
+int b = Console.Read().ToInt32();
+int c = Console.Read().ToInt32();
+int max;
+if (a>=b && a>=c) max = a;
+else if (b>=a && b>=c) max = b;
+else max = c;
+Console.WriteLine(max);

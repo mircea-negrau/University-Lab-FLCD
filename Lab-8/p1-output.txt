@@ -1,0 +1,72 @@
+Reserved word: int
+Identifier: a
+Relational operator: =
+Reserved word: Console.Read
+Separator: (
+Separator: )
+Reserved word: .ToInt32
+Separator: (
+Separator: )
+Separator: ;
+Reserved word: int
+Identifier: b
+Relational operator: =
+Reserved word: Console.Read
+Separator: (
+Separator: )
+Reserved word: .ToInt32
+Separator: (
+Separator: )
+Separator: ;
+Reserved word: int
+Identifier: c
+Relational operator: =
+Reserved word: Console.Read
+Separator: (
+Separator: )
+Reserved word: .ToInt32
+Separator: (
+Separator: )
+Separator: ;
+Reserved word: int
+Identifier: max
+Separator: ;
+Reserved word: if
+Separator: (
+Identifier: a
+Relational operator: >=
+Identifier: b
+Relational operator: &&
+Identifier: a
+Relational operator: >=
+Identifier: c
+Separator: )
+Identifier: max
+Relational operator: =
+Identifier: a
+Separator: ;
+Reserved word: else
+Reserved word: if
+Separator: (
+Identifier: b
+Relational operator: >=
+Identifier: a
+Relational operator: &&
+Identifier: b
+Relational operator: >=
+Identifier: c
+Separator: )
+Identifier: max
+Relational operator: =
+Identifier: b
+Separator: ;
+Reserved word: else
+Identifier: max
+Relational operator: =
+Identifier: c
+Separator: ;
+Reserved word: Console.WriteLine
+Separator: (
+Identifier: max
+Separator: )
+Separator: ;

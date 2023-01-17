@@ -1,0 +1,52 @@
+Reserved word: int
+Identifier: a
+Relational operator: =
+Reserved word: Console.Read
+Separator: (
+Separator: )
+Reserved word: .ToInt32
+Separator: (
+Separator: )
+Separator: ;
+Reserved word: int
+Identifier: b
+Relational operator: =
+Reserved word: Console.Read
+Separator: (
+Separator: )
+Reserved word: .ToInt32
+Separator: (
+Separator: )
+Separator: ;
+Reserved word: while
+Separator: (
+Identifier: a
+Relational operator: !=
+Identifier: b
+Separator: )
+Separator: {
+Reserved word: if
+Separator: (
+Identifier: a
+Relational operator: >
+Identifier: b
+Separator: )
+Identifier: a
+Relational operator: =
+Identifier: a
+Operator: -
+Identifier: b
+Separator: ;
+Reserved word: else
+Identifier: b
+Relational operator: =
+Identifier: b
+Operator: -
+Identifier: a
+Separator: ;
+Separator: }
+Reserved word: Console.WriteLine
+Separator: (
+Identifier: a
+Separator: )
+Separator: ;
